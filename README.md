@@ -38,6 +38,36 @@ Eğer filePath yolu belirtilmemiş ise **SetFilePath** methodunu kullanarak dosy
 **Sheet<T>(string worksheetName, int startRow, int endRow, params string[] columnLetterNames):** Belirlenen Çalışma Sayfasının tablo verilerini liste biçiminde getirir.
  
  ```csharp
+public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+ {
+        [ExcelStreamerColumnLetter("a")]
+        public string Name { get; set; }
+        [ExcelStreamerColumnLetter("b")]
+        public string Surname { get; set; }
+ }
+ 
+ public class ExampleProject 
+ {
+    public void ExampleMethod()
+   {
+      List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, nameof(ExampleExcelSheetModel.Name),      nameof(ExampleExcelSheetModel.Surname));
+ //OR
+      List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, "a", "b");
+   }
+ }
+ ```
+ 
+ **Sheets<T>(int startRow, int endRow, params string[] columnLetterNames):** Microsoft Excel dosyasındaki mevcut tüm Çalışma alanlarınıdaki tabloları verilerini uygun belirlenen modele getirir.
+ 
+  ```csharp
+ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+ {
+        [ExcelStreamerColumnLetter("a")]
+        public string Name { get; set; }
+        [ExcelStreamerColumnLetter("b")]
+        public string Surname { get; set; }
+ }
+ 
  public class ExampleExcelModel : ExcelStreamerObject
  {
     [ExcelStreamerSheetName("Yapılacaklar Listesi")]
@@ -46,11 +76,65 @@ Eğer filePath yolu belirtilmemiş ise **SetFilePath** methodunu kullanarak dosy
  
  public class ExampleProject 
  {
-     public void ExampleMethod()
-   {
-      List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, nameof(ExampleExcelSheetModel.Name),      nameof(ExampleExcelSheetModel.Surname));
- //OR
-      List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, "a", "b");
-   }
+    public void ExampleMethod()
+    {
+        ExampleExcelModel exampleLetterList = excelStreamer.Sheets<ExampleExcelModel>(1, 5, "a", "b");
+        //OR
+        ExampleExcelModel exampleLetterList = excelStreamer.Sheets<ExampleExcelModel>(1, 5, nameof(ExampleExcelSheetModel.Name), nameof(ExampleExcelSheetModel.Surname));
+    }
+ }
+  ```
+ 
+**Get<T>(string worksheetName, int row, params string[] columnLetterNames):** Belirlenen Çalışma alanınındaki bir tablo verisini istenilen nesne türünde getirir.
+```csharp
+ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+ {
+        [ExcelStreamerColumnLetter("a")]
+        public string Name { get; set; }
+        [ExcelStreamerColumnLetter("b")]
+        public string Surname { get; set; }
+ }
+ 
+ public class ExampleProject 
+ {
+    public void ExampleMethod()
+    {
+        ExampleExcelSheetModel exampleSheetData = excelStreamer.Get<ExampleExcelSheetModel>("Page1", 1, nameof(ExampleExcelSheetModel.Name));
+        //OR
+        ExampleExcelSheetModel exampleSheetData = excelStreamer.Get<ExampleExcelSheetModel>("Page1", 1, "a","b");
+    }
  }
  ```
+ 
+**Get<ExcelStreamerSheet, T>(string worksheetName, string columnLetterName, int row):** Belirlenen Çalışma alanınındaki bir tablo verisini istenilen nesne türünde getirir.
+ 
+ ```csharp
+ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+ {
+        [ExcelStreamerColumnLetter("a")]
+        public string Name { get; set; }
+        [ExcelStreamerColumnLetter("b")]
+        public string Surname { get; set; }
+ }
+ 
+ public class ExampleProject 
+ {
+    public void ExampleMethod()
+    {
+         string exampleSheetDataName = excelStreamer.Get<ExampleExcelSheetModel, string>("Page1", nameof(ExampleExcelSheetModel.Name), 1);
+    }
+ }
+  ```
+ 
+**Get<T>(string worksheetName, string columnLetterName, int row):**  Belirlenen Çalışma alanınındaki bir tablo verisini istenilen türde getirir.
+ 
+  ```csharp
+ public class ExampleProject 
+ {
+    public void ExampleMethod()
+    {
+        string exampleSheetDataSurname = excelStreamer.Get<string>("Page1", "b", 1);
+    }
+ }
+  ```
+ 
