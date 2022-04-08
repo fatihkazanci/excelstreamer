@@ -44,7 +44,13 @@ Eğer filePath yolu belirtilmemiş ise **SetFilePath** methodunu kullanarak dosy
     public List<ExampleExcelSheetModel> ToDoList { get; set; }
  }
  
- List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, nameof(ExampleExcelSheetModel.Name), nameof(ExampleExcelSheetModel.Surname));
+ public class ExampleProject 
+ {
+     public void ExampleMethod()
+   {
+      List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, nameof(ExampleExcelSheetModel.Name),      nameof(ExampleExcelSheetModel.Surname));
  //OR
- List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, "a", "b");
+      List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, "a", "b");
+   }
+ }
  ```
