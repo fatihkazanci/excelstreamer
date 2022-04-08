@@ -46,6 +46,30 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  }
  ```
 
+# Base Models
+**ExcelStreamerObject:** Bütün Çalışma Alanlarını listeleyebilmek için bu abstract class'a ihtiyaç duyulur.
+
+```csharp
+public class ExampleExcelModel : ExcelStreamerObject
+{
+    [ExcelStreamerSheetName("Yapılacaklar Listesi")]
+    public List<ExampleExcelSheetModel> ToDoList { get; set; }
+}
+```
+
+**ExcelStreamerSheetObject:** Bir Çalışma alanının modelini oluşturabilmekiçin bu abstract class'a ihtiyaç duyulur.
+
+```csharp
+public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+ {
+        [ExcelStreamerColumnLetter("a")]
+        public string Name { get; set; }
+        [ExcelStreamerColumnLetter("b")]
+        public string Surname { get; set; }
+ }
+```
+ 
+
 # Methods
 
 ![image](https://user-images.githubusercontent.com/33206545/162419217-146890a5-6228-4117-b797-704617aa636c.png)
