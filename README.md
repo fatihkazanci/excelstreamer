@@ -106,7 +106,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  }
  ```
  
-**Get<ExcelStreamerSheet, T>(string worksheetName, string columnLetterName, int row):** Belirlenen Çalışma alanınındaki bir tablo verisini istenilen nesne türünde getirir.
+**Get<ExcelStreamerSheet, T>(string worksheetName, string columnLetterName, int row):** Belirlenen Çalışma alanınındaki bir tablo verisini istenilen türde getirir.
  
  ```csharp
  public class ExampleExcelSheetModel: ExcelStreamerSheetObject
@@ -138,3 +138,72 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  }
   ```
  
+**Update(ExcelStreamerSheetObject updateObject):** Verilen ExcelStreamerSheetObject objesine göre Microsoft Excel dosyasındaki belirtilen alanı günceller.
+ 
+ ```csharp
+ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+ {
+        [ExcelStreamerColumnLetter("a")]
+        public string Name { get; set; }
+        [ExcelStreamerColumnLetter("b")]
+        public string Surname { get; set; }
+ }
+ 
+ public class ExampleProject 
+ {
+    public void ExampleMethod()
+    {
+         List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, nameof(ExampleExcelSheetModel.Name), nameof(ExampleExcelSheetModel.Surname));
+         exampleList[1].Name = "Osman";
+         excelStreamer.Update(exampleList[1]);
+    }
+ }
+ ```
+ 
+**Update(object newValue, string worksheetName, string columnLetterName, int row):** Belirtilen Çalışma Alanına göre Microsoft Excel dosyasındaki alanı günceller.
+ 
+```csharp
+ public class ExampleProject 
+ {
+    public void ExampleMethod()
+    {
+       excelStreamer.Update("Kazım", "Page1", "a", 1);
+    }
+ }
+```
+ 
+**Count(string worksheetName):** Belirtilen Çalışma alanındaki tablonun satır ve sutun sayısını getirir.
+ 
+ ```csharp
+ public class ExampleProject 
+ {
+    public void ExampleMethod()
+    {
+        ExcelStreamerSheetCountResponse exampleSheetCount = excelStreamer.Count("Page1");
+    }
+ }
+```
+ 
+ **Count():** Bütün Çalışma alanlarındaki tabloların satır ve sutun sayısını getirir.
+ 
+ ```csharp
+ public class ExampleProject 
+ {
+    public void ExampleMethod()
+    {
+         ExcelStreamerCountResponse allSheetCount = excelStreamer.Count();
+    }
+ }
+```
+ 
+ *UpdateSheetName(string currentSheetName, string newSheetName):** Microsoft Excel dosyasındaki istenilen bir Çalışma Alanı adını değiştirir.
+ 
+  ```csharp
+ public class ExampleProject 
+ {
+    public void ExampleMethod()
+    {
+         excelStreamer.UpdateSheetName("Page1", "ExampleSheetName");
+    }
+ }
+```
