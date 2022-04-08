@@ -1,5 +1,5 @@
-# ExcelStreamer.NET
-ExcelStreamer ClosedXML ve ExcelDataReader Kütüphanelerinden faydalanarak Microsoft Excel (.xlsx) dosyasını okuma ve güncelleme işlemlerini daha sade bir şekilde kodlamanızı sağlayan kütüphanedir.
+# ExcelStreamer
+ExcelStreamer ClosedXML ve ExcelDataReader Kütüphanelerinden faydalanarak Microsoft Excel (.xlsx) dosyasını okuma ve güncelleme işlemlerini daha sade bir şekilde kodlamanızı sağlayan C# kütüphanesidir.
 
 # Installation
 Yeni bir ExcelStreamer nesnesi oluşturarak başlayabilirsiniz
