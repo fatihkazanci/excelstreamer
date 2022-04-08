@@ -71,8 +71,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  
 
 # Methods
-
-![image](https://user-images.githubusercontent.com/33206545/162419217-146890a5-6228-4117-b797-704617aa636c.png)
+![image](https://user-images.githubusercontent.com/33206545/162427262-197f2fbe-6aef-491e-9c2c-812a71b41979.png)
 
 
 **SetFilePath(string filePath):** ExcelStreamer'in okuyacağı dosya yolunu belirler.
