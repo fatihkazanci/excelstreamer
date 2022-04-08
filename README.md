@@ -23,7 +23,28 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 }
 ```
 
-Eğer filePath yolu belirtilmemiş ise **SetFilePath** methodunu kullanarak dosya yolu belirtmeniz gerekmektedir.
+Eğer dosya yolu belirtilmemiş ise **SetFilePath** methodunu kullanarak dosya yolu belirtmeniz gerekmektedir.
+
+# Attributes
+**ExcelStreamerColumnLetter:** Oluşturulan Modeldeki bir Property'in hangi Microsoft Excel Kolonuna işaret ettiğini belirler.
+ ```csharp
+public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+ {
+        [ExcelStreamerColumnLetter("a")]
+        public string Name { get; set; }
+        [ExcelStreamerColumnLetter("b")]
+        public string Surname { get; set; }
+ }
+ ```
+ 
+ **ExcelStreamerSheetName:** Oluşturulan Modeldeki bir Property'in hangi Microsoft Excel Çalışma Alanına işaret ettiğini belirler.
+  ```csharp
+ public class ExampleExcelModel : ExcelStreamerObject
+ {
+    [ExcelStreamerSheetName("Yapılacaklar Listesi")]
+    public List<ExampleExcelSheetModel> ToDoList { get; set; }
+ }
+ ```
 
 # Methods
 
@@ -196,7 +217,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  }
 ```
  
- *UpdateSheetName(string currentSheetName, string newSheetName):** Microsoft Excel dosyasındaki istenilen bir Çalışma Alanı adını değiştirir.
+ **UpdateSheetName(string currentSheetName, string newSheetName):** Microsoft Excel dosyasındaki istenilen bir Çalışma Alanı adını değiştirir.
  
   ```csharp
  public class ExampleProject 
@@ -207,3 +228,4 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
     }
  }
 ```
+ 
