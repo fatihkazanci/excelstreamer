@@ -1,0 +1,84 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Fatih\\Desktop\\ExcelReaderWriterLibrary-20220409T095843Z-001\\ExcelReaderWriterLibrary\\ExcelStreamerLibrary\\ExcelStreamerLibrary.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Fatih\\Desktop\\ExcelReaderWriterLibrary-20220409T095843Z-001\\ExcelReaderWriterLibrary\\ExcelStreamerLibrary\\ExcelStreamerLibrary.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Fatih\\Desktop\\ExcelReaderWriterLibrary-20220409T095843Z-001\\ExcelReaderWriterLibrary\\ExcelStreamerLibrary\\ExcelStreamerLibrary.csproj",
+        "projectName": "ExcelStreamerLibrary",
+        "projectPath": "C:\\Users\\Fatih\\Desktop\\ExcelReaderWriterLibrary-20220409T095843Z-001\\ExcelReaderWriterLibrary\\ExcelStreamerLibrary\\ExcelStreamerLibrary.csproj",
+        "packagesPath": "C:\\Users\\Fatih\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Fatih\\Desktop\\ExcelReaderWriterLibrary-20220409T095843Z-001\\ExcelReaderWriterLibrary\\ExcelStreamerLibrary\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Fatih\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "ClosedXML": {
+              "target": "Package",
+              "version": "[0.95.4, )"
+            },
+            "ExcelDataReader": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
+            "ExcelDataReader.DataSet": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "System.Text.Encoding.CodePages": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
