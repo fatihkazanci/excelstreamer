@@ -11,6 +11,14 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+*	ExcelStreamer v1.0
+*	Updated On: 09/04/2022 (dd/MM/yyyy)
+*	By Fatih KAZANCI
+*   Licenced By GNU General Public License v3.0
+*   https://github.com/fatihkazanci/excelstreamer/blob/main/LICENSE
+*/
+
 namespace ExcelStreamerLibrary
 {
     public class ExcelStreamer : IDisposable
