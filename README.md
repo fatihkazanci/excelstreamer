@@ -94,9 +94,9 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  {
     public void ExampleMethod()
    {
-       List<ExampleExcelWorkSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelWorkSheetModel>("Page1", 1, 5, nameof(ExampleExcelSheetModel.Name),      nameof(ExampleExcelSheetModel.Surname));
+       List<ExampleExcelWorkSheetModel> exampleList = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1", 1, 5, nameof(ExampleExcelWorkSheetModel.Name),      nameof(ExampleExcelWorkSheetModel.Surname));
       //OR
-      List<ExampleExcelWorkSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelWorkSheetModel>("Page1", 1, 5, "a", "b");
+      List<ExampleExcelWorkSheetModel> exampleList = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1", 1, 5, "a", "b");
       //OR
       List<ExampleExcelWorkSheetModel> exampleListNoLimit = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1");
       //OR
@@ -120,8 +120,8 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  
  public class ExampleExcelModel : ExcelStreamerObject
  {
-    [ExcelStreamerSheetName("Yapılacaklar Listesi")]
-    public List<ExampleExcelSheetModel> ToDoList { get; set; }
+    [ExcelStreamerWorkSheetName("Yapılacaklar Listesi")]
+    public List<ExampleExcelWorkSheetModel> ToDoList { get; set; }
  }
  
  public class ExampleProject 
@@ -130,7 +130,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
     {
         ExampleExcelModel exampleLetterList = excelStreamer.WorkSheets<ExampleExcelModel>(1, 5, "a", "b");
         //OR
-        ExampleExcelModel exampleLetterList = excelStreamer.WorkSheets<ExampleExcelModel>(1, 5, nameof(ExampleExcelSheetModel.Name), nameof(ExampleExcelSheetModel.Surname));
+        ExampleExcelModel exampleLetterList = excelStreamer.WorkSheets<ExampleExcelModel>(1, 5, nameof(ExampleExcelWorkSheetModel.Name), nameof(ExampleExcelWorkSheetModel.Surname));
         //OR
         ExampleExcelModel exampleLetterListNoLimit = excelStreamer.WorkSheets<ExampleExcelModel>();
     }
@@ -151,11 +151,11 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  {
     public void ExampleMethod()
     {
-        ExampleExcelSheetModel exampleSheetData = excelStreamer.Get<ExampleExcelSheetModel>("Page1", 1, nameof(ExampleExcelSheetModel.Name));
+        ExampleExcelWorkSheetModel exampleSheetData = excelStreamer.Get<ExampleExcelWorkSheetModel>("Page1", 1, nameof(ExampleExcelWorkSheetModel.Name));
         //OR
-        ExampleExcelSheetModel exampleSheetData = excelStreamer.Get<ExampleExcelSheetModel>("Page1", 1, "a","b");
+        ExampleExcelWorkSheetModel exampleSheetData = excelStreamer.Get<ExampleExcelWorkSheetModel>("Page1", 1, "a","b");
         //OR
-        string exampleSheetDataName = excelStreamer.Get<ExampleExcelSheetModel, string>("Page1", nameof(ExampleExcelSheetModel.Name), 1);
+        string exampleSheetDataName = excelStreamer.Get<ExampleExcelWorkSheetModel, string>("Page1", nameof(ExampleExcelWorkSheetModel.Name), 1);
         //OR
         string exampleSheetDataSurname = excelStreamer.Get<string>("Page1", "b", 1);
     }
@@ -177,7 +177,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  {
     public void ExampleMethod()
     {
-         List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, nameof(ExampleExcelSheetModel.Name), nameof(ExampleExcelSheetModel.Surname));
+         List<ExampleExcelWorkSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelWorkSheetModel>("Page1", 1, 5, nameof(ExampleExcelWorkSheetModel.Name), nameof(ExampleExcelWorkSheetModel.Surname));
          exampleList[1].Name = "Osman";
          excelStreamer.Update(exampleList[1]);
          //OR
