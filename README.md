@@ -1,8 +1,8 @@
 # ExcelStreamer
-ExcelStreamer ClosedXML ve ExcelDataReader Kütüphanelerinden faydalanarak Microsoft Excel (.xlsx) dosyasını okuma ve güncelleme işlemlerini daha sade bir şekilde kodlamanızı sağlayan .NET kütüphanesidir.
+ExcelStreamer is a .NET library that enables you to code reading and updating Microsoft Excel (.xlsx) file in a simpler way by making use of ClosedXML and ExcelDataReader Libraries.
 
 # Installation
-Yeni bir ExcelStreamer nesnesi oluşturarak başlayabilirsiniz
+You can start with creating a ExcelStreamer object. 
 
 ```csharp
 string excelPath = $"<your filePath address>";
@@ -12,7 +12,7 @@ using (ExcelStreamer excelStreamer = new(excelPath))
  }
 ```
 
-veyahut eğer ASP.Net Core projelerinde kullanacaksanız dependency injection yapabilirsiniz.
+Or you can inject dependency if you are going to use it in ASP.Net Core projects. 
 
 ```csharp
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -23,10 +23,10 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 }
 ```
 
-Eğer dosya yolu belirtilmemiş ise **SetFilePath** methodunu kullanarak dosya yolu belirtmeniz gerekmektedir.
+If the file path is not specified, you must specify the file path using the SetFilePath method. 
 
 # Attributes
-**ExcelStreamerColumnLetter:** Oluşturulan Modeldeki bir Property'in hangi Microsoft Excel Kolonuna işaret ettiğini belirler.
+**ExcelStreamerColumnLetter:** Determines which Microsoft Excel Column a Property in the created Model points to. 
  ```csharp
 public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
  {
@@ -37,7 +37,7 @@ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
  }
  ```
  
- **ExcelStreamerSheetName:** Oluşturulan Modeldeki bir Property'in hangi Microsoft Excel Çalışma Alanına işaret ettiğini belirler.
+ **ExcelStreamerSheetName:** Determines which Microsoft Excel Workspace a Property in the created Model points to. 
   ```csharp
  public class ExampleExcelModel : ExcelStreamerObject
  {
@@ -47,7 +47,7 @@ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
  ```
 
 # Base Models
-**ExcelStreamerObject:** Bütün Çalışma Alanlarını listeleyebilmek için bu abstract class'a ihtiyaç duyulur.
+**ExcelStreamerObject:** This abstract class is used for listing all Workspaces. 
 
 ```csharp
 public class ExampleExcelModel : ExcelStreamerObject
@@ -57,7 +57,7 @@ public class ExampleExcelModel : ExcelStreamerObject
 }
 ```
 
-**ExcelStreamerWorkSheetObject:** Bir Çalışma alanının modelini oluşturabilmekiçin bu abstract class'a ihtiyaç duyulur.
+**ExcelStreamerWorkSheetObject:** This abstract is used for creating a model of a Workspace. 
 
 ```csharp
 public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
@@ -74,12 +74,12 @@ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
 ![image](https://user-images.githubusercontent.com/33206545/162427262-197f2fbe-6aef-491e-9c2c-812a71b41979.png)
 
 
-**SetFilePath(string filePath):** ExcelStreamer'in okuyacağı dosya yolunu belirler.
+**SetFilePath(string filePath):** Determines the file path that ExcelStreamer will read. 
 
 ```csharp
    excelStreamer.SetFilePath("<Your Microsoft Excel File Path>");
 ```
-**WorkSheet:** Belirlenen Çalışma Sayfasının tablo verilerini liste biçiminde getirir.
+**WorkSheet:**  Brings the determined work page’s table data as a list.
  
  ```csharp
 public class ExampleExcelSheetModel: ExcelStreamerSheetObject
@@ -103,7 +103,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  }
  ```
  
- **WorkSheets:** Microsoft Excel dosyasındaki mevcut tüm Çalışma alanlarınıdaki tabloları verilerini uygun belirlenen modele getirir.
+ **WorkSheets:** Brings the data of the tables in all existing Workspaces in the Microsoft Excel file to the appropriate determined model.
  
   ```csharp
  public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
@@ -133,7 +133,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  }
   ```
  
-**Get:** Belirlenen Çalışma alanınındaki bir tablo verisini istenilen nesne türünde getirir.
+**Get:** Brings a table data in the determined Workspace in the desired object type.  
 ```csharp
  public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
  {
@@ -158,7 +158,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  }
  ```
  
-**Update:** Verilen ExcelStreamerSheetObject objesine göre Microsoft Excel dosyasındaki belirtilen alanı günceller.
+**Update:** Updates the determined field in the Microsoft Excel file according to the given ExcelStreamerSheetObject object. 
  
  ```csharp
  public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
@@ -182,7 +182,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  }
  ```
  
-**Count:** Belirtilen Çalışma alanındaki tablonun satır ve sutun sayısını getirir.
+**Count:** Brings the number of lines and columns of the table in the specified Workspace. 
  
  ```csharp
  public class ExampleProject 
@@ -196,7 +196,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  }
 ```
  
- **UpdateWorkSheetName:** Microsoft Excel dosyasındaki istenilen bir Çalışma Alanı adını değiştirir.
+ **UpdateWorkSheetName:** Changes the name of the desired Workspace in the Microsoft Excel file. 
  
   ```csharp
  public class ExampleProject 
