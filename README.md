@@ -41,7 +41,7 @@ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
   ```csharp
  public class ExampleExcelModel : ExcelStreamerObject
  {
-    [ExcelStreamerSheetName("Yapılacaklar Listesi")]
+    [ExcelStreamerWorkSheetName("Yapılacaklar Listesi")]
     public List<ExampleExcelSheetModel> ToDoList { get; set; }
  }
  ```
@@ -52,7 +52,7 @@ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
 ```csharp
 public class ExampleExcelModel : ExcelStreamerObject
 {
-    [ExcelStreamerSheetName("Yapılacaklar Listesi")]
+    [ExcelStreamerWorkSheetName("Yapılacaklar Listesi")]
     public List<ExampleExcelSheetModel> ToDoList { get; set; }
 }
 ```
@@ -207,7 +207,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  {
     public void ExampleMethod()
     {
-         excelStreamer.UpdateSheetName("Page1", "ExampleSheetName");
+         excelStreamer.UpdateWorkSheetName("Page1", "ExampleSheetName");
     }
  }
 ```
