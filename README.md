@@ -28,7 +28,7 @@ Eğer dosya yolu belirtilmemiş ise **SetFilePath** methodunu kullanarak dosya y
 # Attributes
 **ExcelStreamerColumnLetter:** Oluşturulan Modeldeki bir Property'in hangi Microsoft Excel Kolonuna işaret ettiğini belirler.
  ```csharp
-public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
  {
         [ExcelStreamerColumnLetter("a")]
         public string Name { get; set; }
@@ -57,10 +57,10 @@ public class ExampleExcelModel : ExcelStreamerObject
 }
 ```
 
-**ExcelStreamerSheetObject:** Bir Çalışma alanının modelini oluşturabilmekiçin bu abstract class'a ihtiyaç duyulur.
+**ExcelStreamerWorkSheetObject:** Bir Çalışma alanının modelini oluşturabilmekiçin bu abstract class'a ihtiyaç duyulur.
 
 ```csharp
-public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
  {
         [ExcelStreamerColumnLetter("a")]
         public string Name { get; set; }
@@ -79,7 +79,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
 ```csharp
    excelStreamer.SetFilePath("<Your Microsoft Excel File Path>");
 ```
-**Sheet<T>(string worksheetName, int startRow, int endRow, params string[] columnLetterNames):** Belirlenen Çalışma Sayfasının tablo verilerini liste biçiminde getirir.
+**WorkSheet:** Belirlenen Çalışma Sayfasının tablo verilerini liste biçiminde getirir.
  
  ```csharp
 public class ExampleExcelSheetModel: ExcelStreamerSheetObject
@@ -94,17 +94,19 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  {
     public void ExampleMethod()
    {
-      List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, nameof(ExampleExcelSheetModel.Name),      nameof(ExampleExcelSheetModel.Surname));
- //OR
-      List<ExampleExcelSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelSheetModel>("Page1", 1, 5, "a", "b");
+       List<ExampleExcelWorkSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelWorkSheetModel>("Page1", 1, 5, nameof(ExampleExcelSheetModel.Name),      nameof(ExampleExcelSheetModel.Surname));
+      //OR
+      List<ExampleExcelWorkSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelWorkSheetModel>("Page1", 1, 5, "a", "b");
+      //OR
+      List<ExampleExcelWorkSheetModel> exampleListNoLimit = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1");
    }
  }
  ```
  
- **Sheets<T>(int startRow, int endRow, params string[] columnLetterNames):** Microsoft Excel dosyasındaki mevcut tüm Çalışma alanlarınıdaki tabloları verilerini uygun belirlenen modele getirir.
+ **WorkSheets:** Microsoft Excel dosyasındaki mevcut tüm Çalışma alanlarınıdaki tabloları verilerini uygun belirlenen modele getirir.
  
   ```csharp
- public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
  {
         [ExcelStreamerColumnLetter("a")]
         public string Name { get; set; }
@@ -122,16 +124,18 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  {
     public void ExampleMethod()
     {
-        ExampleExcelModel exampleLetterList = excelStreamer.Sheets<ExampleExcelModel>(1, 5, "a", "b");
+        ExampleExcelModel exampleLetterList = excelStreamer.WorkSheets<ExampleExcelModel>(1, 5, "a", "b");
         //OR
-        ExampleExcelModel exampleLetterList = excelStreamer.Sheets<ExampleExcelModel>(1, 5, nameof(ExampleExcelSheetModel.Name), nameof(ExampleExcelSheetModel.Surname));
+        ExampleExcelModel exampleLetterList = excelStreamer.WorkSheets<ExampleExcelModel>(1, 5, nameof(ExampleExcelSheetModel.Name), nameof(ExampleExcelSheetModel.Surname));
+        //OR
+        ExampleExcelModel exampleLetterListNoLimit = excelStreamer.WorkSheets<ExampleExcelModel>();
     }
  }
   ```
  
-**Get<T>(string worksheetName, int row, params string[] columnLetterNames):** Belirlenen Çalışma alanınındaki bir tablo verisini istenilen nesne türünde getirir.
+**Get:** Belirlenen Çalışma alanınındaki bir tablo verisini istenilen nesne türünde getirir.
 ```csharp
- public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
  {
         [ExcelStreamerColumnLetter("a")]
         public string Name { get; set; }
@@ -146,46 +150,18 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
         ExampleExcelSheetModel exampleSheetData = excelStreamer.Get<ExampleExcelSheetModel>("Page1", 1, nameof(ExampleExcelSheetModel.Name));
         //OR
         ExampleExcelSheetModel exampleSheetData = excelStreamer.Get<ExampleExcelSheetModel>("Page1", 1, "a","b");
+        //OR
+        string exampleSheetDataName = excelStreamer.Get<ExampleExcelSheetModel, string>("Page1", nameof(ExampleExcelSheetModel.Name), 1);
+        //OR
+        string exampleSheetDataSurname = excelStreamer.Get<string>("Page1", "b", 1);
     }
  }
  ```
  
-**Get<ExcelStreamerSheet, T>(string worksheetName, string columnLetterName, int row):** Belirlenen Çalışma alanınındaki bir tablo verisini istenilen türde getirir.
- 
- ```csharp
- public class ExampleExcelSheetModel: ExcelStreamerSheetObject
- {
-        [ExcelStreamerColumnLetter("a")]
-        public string Name { get; set; }
-        [ExcelStreamerColumnLetter("b")]
-        public string Surname { get; set; }
- }
- 
- public class ExampleProject 
- {
-    public void ExampleMethod()
-    {
-         string exampleSheetDataName = excelStreamer.Get<ExampleExcelSheetModel, string>("Page1", nameof(ExampleExcelSheetModel.Name), 1);
-    }
- }
-  ```
- 
-**Get<T>(string worksheetName, string columnLetterName, int row):**  Belirlenen Çalışma alanınındaki bir tablo verisini istenilen türde getirir.
- 
-  ```csharp
- public class ExampleProject 
- {
-    public void ExampleMethod()
-    {
-        string exampleSheetDataSurname = excelStreamer.Get<string>("Page1", "b", 1);
-    }
- }
-  ```
- 
 **Update(ExcelStreamerSheetObject updateObject):** Verilen ExcelStreamerSheetObject objesine göre Microsoft Excel dosyasındaki belirtilen alanı günceller.
  
  ```csharp
- public class ExampleExcelSheetModel: ExcelStreamerSheetObject
+ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
  {
         [ExcelStreamerColumnLetter("a")]
         public string Name { get; set; }
@@ -240,7 +216,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
  }
 ```
  
- **UpdateSheetName(string currentSheetName, string newSheetName):** Microsoft Excel dosyasındaki istenilen bir Çalışma Alanı adını değiştirir.
+ **UpdateWorkSheetName(string currentSheetName, string newSheetName):** Microsoft Excel dosyasındaki istenilen bir Çalışma Alanı adını değiştirir.
  
   ```csharp
  public class ExampleProject 
