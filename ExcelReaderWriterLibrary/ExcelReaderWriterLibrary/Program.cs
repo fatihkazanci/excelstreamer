@@ -16,6 +16,10 @@ namespace ExcelReaderWriterLibrary
                 {
                     List<ExampleExcelWorkSheetModel> exampleListNoLimit = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1");
 
+                    List<ExampleExcelWorkSheetModel> exampleListNoLimitOnlyColumns = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1","a");
+
+                    List<ExampleExcelWorkSheetModel> exampleListNoLimitOnlyColumns2 = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1", nameof(ExampleExcelWorkSheetModel.Name));
+
                     List<ExampleExcelWorkSheetModel> exampleList = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1", 1, 4, nameof(ExampleExcelWorkSheetModel.Name), nameof(ExampleExcelWorkSheetModel.Surname));
 
                     ExampleExcelModel exampleLetterList = excelStreamer.WorkSheets<ExampleExcelModel>(1, 4, "a", "b");
