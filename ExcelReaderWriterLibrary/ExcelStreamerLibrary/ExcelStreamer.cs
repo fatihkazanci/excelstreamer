@@ -49,6 +49,10 @@ namespace ExcelStreamerLibrary
         {
             return (List<T>)WorkSheet(typeof(List<T>), worksheetName);
         }
+        public List<T> WorkSheet<T>(string worksheetName, params string[] columnLetterNames) where T : ExcelStreamerWorkSheetObject
+        {
+            return (List<T>)WorkSheet(typeof(List<T>), worksheetName, columnLetterNames);
+        }
         private object WorkSheet(Type objectType, string worksheetName, int startRow, int endRow, params string[] columnLetterNames)
         {
             startRow = startRow <= 0 ? 1 : startRow;
@@ -183,6 +187,85 @@ namespace ExcelStreamerLibrary
                 return newObjectList;
             }
         }
+        private object WorkSheet(Type objectType, string worksheetName, params string[] columnLetterNames)
+        {
+            object newObjectList = Activator.CreateInstance(objectType);
+            using (FileStream stream = File.Open(_filePath, FileMode.Open, FileAccess.Read))
+            {
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+                using (IExcelDataReader reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    do
+                    {
+                        while (reader.Read()) { }
+                    } while (reader.NextResult());
+
+                    DataSet result = reader.AsDataSet();
+                    DataTable tables = result.Tables[worksheetName];
+                    for (int c = 1; c <= tables.Rows.Count; c++)
+                    {
+                        ExcelStreamerWorkSheetObject newObject = Activator.CreateInstance(objectType.GenericTypeArguments[0]) as ExcelStreamerWorkSheetObject;
+                        newObject._RowNumber = c;
+                        newObject._SheetName = worksheetName;
+                        newObjectList.GetType().GetMethod("Add").Invoke(newObjectList, new[] { newObject });
+                    }
+                    string[] alp = ExcelStreamerExtensions.Generate().Take(tables.Columns.Count).ToArray();
+                    for (int c = 1; c < tables.Columns.Count; c++)
+                    {
+                        foreach (string letterName in columnLetterNames)
+                        {
+                            string letterNameUpper = letterName.ToUpper();
+                            int columnStartIndex = Array.IndexOf(alp, letterNameUpper);
+
+                            for (int i = 1; i < tables.Rows.Count; i++)
+                            {
+                                object currentObject = null;
+                                int newObjectListCount = (int)newObjectList.GetType().GetTypeInfo().GetProperty("Count").GetValue(newObjectList);
+
+                                for (int n = 0; n < newObjectListCount; n++)
+                                {
+                                    object currentNObject = newObjectList.GetType().GetTypeInfo().GetProperty("Item").GetValue(newObjectList, new object[] { n });
+                                    int currentRowNumber = (int)currentNObject.GetType().GetProperty(nameof(ExcelStreamerWorkSheetObject._RowNumber)).GetValue(currentNObject);
+                                    if (currentRowNumber == i)
+                                    {
+                                        currentObject = (ExcelStreamerWorkSheetObject)currentNObject;
+                                        break;
+                                    }
+                                }
+
+                                if (columnStartIndex == -1)
+                                {
+                                    string newLetterName = currentObject?.GetType().GetTypeInfo().GetProperty(letterName)?.GetCustomAttribute<ExcelStreamerColumnLetter>()?.ColumnLetterName.ToUpper();
+                                    if (!string.IsNullOrEmpty(newLetterName))
+                                    {
+                                        columnStartIndex = Array.IndexOf(alp, newLetterName);
+                                        letterNameUpper = newLetterName;
+                                    }
+                                    else
+                                    {
+                                        return null;
+                                    }
+                                }
+
+                                PropertyInfo[] properties = currentObject?.GetType()?.GetTypeInfo()?.GetProperties();
+                                if (properties is not null)
+                                {
+                                    foreach (PropertyInfo item in properties)
+                                    {
+                                        if (item.GetCustomAttribute<ExcelStreamerColumnLetter>()?.ColumnLetterName?.ToUpper() == letterNameUpper)
+                                        {
+                                            string currentItem = ((DataRow)tables.Rows[i]).ItemArray[c].ToString();
+                                            item.SetValue(currentObject, currentItem);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return newObjectList;
+            }
+        }
         public T WorkSheets<T>(int startRow, int endRow, params string[] columnLetterNames) where T : ExcelStreamerObject
         {
             Type tType = typeof(T);
@@ -191,7 +274,7 @@ namespace ExcelStreamerLibrary
 
             foreach (IXLWorksheet item in xLWorksheets)
             {
-                PropertyInfo sheetProperty = tType.GetProperties().Where(i => i.GetCustomAttribute<ExcelStreamerSheetName>()?.SheetName == item.Name).FirstOrDefault();
+                PropertyInfo sheetProperty = tType.GetProperties().Where(i => i.GetCustomAttribute<ExcelStreamerWorkSheetName>()?.SheetName == item.Name).FirstOrDefault();
                 if (sheetProperty is not null)
                 {
                     object propertyObjectList = WorkSheet(sheetProperty.PropertyType, item.Name, startRow, endRow, columnLetterNames);
@@ -208,7 +291,7 @@ namespace ExcelStreamerLibrary
 
             foreach (IXLWorksheet item in xLWorksheets)
             {
-                PropertyInfo sheetProperty = tType.GetProperties().Where(i => i.GetCustomAttribute<ExcelStreamerSheetName>()?.SheetName == item.Name).FirstOrDefault();
+                PropertyInfo sheetProperty = tType.GetProperties().Where(i => i.GetCustomAttribute<ExcelStreamerWorkSheetName>()?.SheetName == item.Name).FirstOrDefault();
                 if (sheetProperty is not null)
                 {
                     object propertyObjectList = WorkSheet(sheetProperty.PropertyType, item.Name);
