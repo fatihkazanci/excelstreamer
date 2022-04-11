@@ -74,7 +74,7 @@ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
 ![image](https://user-images.githubusercontent.com/33206545/162427262-197f2fbe-6aef-491e-9c2c-812a71b41979.png)
 
 
-**SetFilePath(string filePath):** Determines the file path that ExcelStreamer will read. 
+**SetFilePath:** Determines the file path that ExcelStreamer will read. 
 
 ```csharp
    excelStreamer.SetFilePath("<Your Microsoft Excel File Path>");
@@ -99,6 +99,10 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
       List<ExampleExcelWorkSheetModel> exampleList = excelStreamer.Sheet<ExampleExcelWorkSheetModel>("Page1", 1, 5, "a", "b");
       //OR
       List<ExampleExcelWorkSheetModel> exampleListNoLimit = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1");
+      //OR
+      List<ExampleExcelWorkSheetModel> exampleListNoLimitOnlyColumns = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1","a","b");
+      //OR
+      List<ExampleExcelWorkSheetModel> exampleListNoLimitOnlyColumns2 = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1", nameof(ExampleExcelWorkSheetModel.Name));
    }
  }
  ```
