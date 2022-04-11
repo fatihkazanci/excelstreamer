@@ -10,7 +10,7 @@ namespace ExcelReaderWriterLibrary
 {
     public class ExampleExcelModel : ExcelStreamerObject
     {
-        [ExcelStreamerSheetName("Yapılacaklar Listesi")]
+        [ExcelStreamerWorkSheetName("Yapılacaklar Listesi")]
         public List<ExampleExcelWorkSheetModel> ToDoList { get; set; }
     }
 }
