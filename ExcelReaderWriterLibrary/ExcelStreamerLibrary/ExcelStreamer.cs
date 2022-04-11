@@ -117,7 +117,7 @@ namespace ExcelStreamerLibrary
                                 {
                                     if (item.GetCustomAttribute<ExcelStreamerColumnLetter>()?.ColumnLetterName?.ToUpper() == letterNameUpper)
                                     {
-                                        string currentItem = ((DataRow)tables.Rows[i - 1]).ItemArray[columnStartIndex].ToString();
+                                        object currentItem = ((DataRow)tables.Rows[i - 1]).ItemArray[columnStartIndex];
                                         item.SetValue(currentObject, currentItem);
                                     }
                                 }
@@ -176,7 +176,7 @@ namespace ExcelStreamerLibrary
                                 {
                                     if (item.GetCustomAttribute<ExcelStreamerColumnLetter>()?.ColumnLetterName?.ToUpper() == letterNameUpper)
                                     {
-                                        string currentItem = ((DataRow)tables.Rows[i]).ItemArray[c].ToString();
+                                        object currentItem = ((DataRow)tables.Rows[i]).ItemArray[c];
                                         item.SetValue(currentObject, currentItem);
                                     }
                                 }
@@ -254,7 +254,7 @@ namespace ExcelStreamerLibrary
                                     {
                                         if (item.GetCustomAttribute<ExcelStreamerColumnLetter>()?.ColumnLetterName?.ToUpper() == letterNameUpper)
                                         {
-                                            string currentItem = ((DataRow)tables.Rows[i]).ItemArray[c].ToString();
+                                            object currentItem = ((DataRow)tables.Rows[i]).ItemArray[c];
                                             item.SetValue(currentObject, currentItem);
                                         }
                                     }
@@ -332,7 +332,7 @@ namespace ExcelStreamerLibrary
                         return null;
                     }
                 }
-                string currentItem = xLWorksheet.Cell($"{letterNameUpper}{row}").Value?.ToString();
+                object currentItem = xLWorksheet.Cell($"{letterNameUpper}{row}")?.Value;
                 newObject._RowNumber = row;
                 PropertyInfo[] properties = newObject.GetType().GetTypeInfo().GetProperties();
                 foreach (PropertyInfo item in properties)
