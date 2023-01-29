@@ -11,6 +11,41 @@ using (ExcelStreamer excelStreamer = new(excelPath))
     
  }
 ```
+For with Create Excel
+```csharp
+string willCreateExcelPath = $"<your filePath address>";
+using (ExcelStreamer excelStreamer = new(willCreateExcelPath, newWorksheetNames:"WorkSheetName1","WorksheetName2"))
+ {
+    
+ }
+```
+Or Manual Example 1
+```csharp
+using (ExcelStreamer excelStreamer = new())
+ {
+    string excelPath = $"{AppDomain.CurrentDomain.BaseDirectory}CreatedExampleExcel.xlsx";
+    excelStreamer.CreateExcelFile(excelPath, "Page1");
+ }
+```
+Or Manual Example 2
+```csharp
+using (ExcelStreamer excelStreamer = new())
+ {
+    string excelPath = "<Your Microsoft Excel File Path>";
+    excelStreamer.SetFilePath(excelPath);
+    string defaultWorkSheetName = "<WorkSheet Name>";
+    excelStreamer.SetDefaultWorkSheet(defaultWorkSheetName);
+ }
+```
+Or Manual Example 3
+```csharp
+using (ExcelStreamer excelStreamer = new())
+ {
+    string excelPath = "<Your Microsoft Excel File Path>";
+    string defaultWorkSheetName = "<WorkSheet Name>";
+    excelStreamer.SetDefault(excelPath, defaultWorkSheetName);
+ }
+```
 
 Or you can inject dependency if you are going to use it in ASP.Net Core projects. 
 
@@ -73,12 +108,34 @@ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
 # Methods
 ![image](https://user-images.githubusercontent.com/33206545/162427262-197f2fbe-6aef-491e-9c2c-812a71b41979.png)
 
-
-**SetFilePath:** Determines the file path that ExcelStreamer will read. 
+**SetDefaultFilePath:** Determines the file path that ExcelStreamer will read. 
 
 ```csharp
-   excelStreamer.SetFilePath("<Your Microsoft Excel File Path>");
+   excelStreamer.SetDefaultFilePath("<Your Microsoft Excel File Path>");
 ```
+**SetDefaultWorkSheet:** Determines the Worksheet that ExcelStreamer will read. The **SetDefaultFilePath** Method must be set.
+
+```csharp
+   excelStreamer.SetDefaultWorkSheet("<Your Worksheet Name>");
+```
+
+**SetDefault:** Single method to set both File path and WorkSheet.
+```csharp
+   excelStreamer.SetDefault("<Your Microsoft Excel File Path>","<Your Worksheet Name>");
+```
+
+**CreateExcelFile:** Create New Excel File. When you create new Excel file you don't need to use **SetDefaultFilePath** again.
+```csharp
+public static void ExampleCreateExcel()
+        {
+            using (ExcelStreamer excelStreamer = new())
+            {
+                string excelPath = $"{AppDomain.CurrentDomain.BaseDirectory}CreatedExampleExcel.xlsx";
+                excelStreamer.CreateExcelFile(excelPath, "Page1");
+            }
+        }
+ ```
+
 **WorkSheet:**  Brings the determined work page’s table data as a list.
  
  ```csharp
@@ -182,6 +239,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
          excelStreamer.Update(exampleList[1]);
          //OR
          excelStreamer.Update("Kazım", "Page1", "a", 1);
+         excelStreamer.SaveChanges(); // This is required to save changes.
     }
  }
  ```
