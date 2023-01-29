@@ -11,7 +11,7 @@ using (ExcelStreamer excelStreamer = new(excelPath))
     
  }
 ```
-For with Create Excel
+Or Create Excel
 ```csharp
 string willCreateExcelPath = $"<your filePath address>";
 using (ExcelStreamer excelStreamer = new(willCreateExcelPath, newWorksheetNames:"WorkSheetName1","WorksheetName2"))
