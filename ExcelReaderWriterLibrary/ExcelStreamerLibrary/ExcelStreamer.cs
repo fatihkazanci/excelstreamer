@@ -67,6 +67,11 @@ namespace ExcelStreamerLibrary
             _xLWorkbook = new XLWorkbook(filePath);
             this._filePath = filePath;
         }
+        public void SetDefault(string filePath, string workSheetName)
+        {
+            SetDefaultFilePath(filePath);
+            SetDefaultWorkSheet(workSheetName);
+        }
         public void SetDefaultWorkSheet(string workSheetName)
         {
             _defaultWorksheetName = workSheetName;
