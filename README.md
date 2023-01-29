@@ -73,12 +73,23 @@ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
 # Methods
 ![image](https://user-images.githubusercontent.com/33206545/162427262-197f2fbe-6aef-491e-9c2c-812a71b41979.png)
 
-
 **SetFilePath:** Determines the file path that ExcelStreamer will read. 
 
 ```csharp
    excelStreamer.SetFilePath("<Your Microsoft Excel File Path>");
 ```
+**CreateExcelFile:** Create New Excel File.
+```csharp
+public static void ExampleCreateExcel()
+        {
+            using (ExcelStreamer excelStreamer = new())
+            {
+                string excelPath = $"{AppDomain.CurrentDomain.BaseDirectory}CreatedExampleExcel.xlsx";
+                excelStreamer.CreateExcelFile(excelPath, "Page1");
+            }
+        }
+ ```
+
 **WorkSheet:**  Brings the determined work page’s table data as a list.
  
  ```csharp
@@ -182,6 +193,7 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
          excelStreamer.Update(exampleList[1]);
          //OR
          excelStreamer.Update("Kazım", "Page1", "a", 1);
+         excelStreamer.SaveChanges(); // This is required to save changes.
     }
  }
  ```
