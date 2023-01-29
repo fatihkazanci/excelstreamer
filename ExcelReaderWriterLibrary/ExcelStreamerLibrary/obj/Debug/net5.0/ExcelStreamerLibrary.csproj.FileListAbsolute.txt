@@ -1,0 +1,12 @@
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\bin\Debug\net5.0\ExcelStreamerLibrary.deps.json
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\bin\Debug\net5.0\ExcelStreamerLibrary.dll
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\bin\Debug\net5.0\ExcelStreamerLibrary.pdb
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\obj\Debug\net5.0\ExcelStreamerLibrary.csproj.AssemblyReference.cache
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\obj\Debug\net5.0\ExcelStreamerLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\obj\Debug\net5.0\ExcelStreamerLibrary.AssemblyInfoInputs.cache
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\obj\Debug\net5.0\ExcelStreamerLibrary.AssemblyInfo.cs
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\obj\Debug\net5.0\ExcelStreamerLibrary.csproj.CoreCompileInputs.cache
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\obj\Debug\net5.0\ExcelStreamerLibrary.dll
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\obj\Debug\net5.0\refint\ExcelStreamerLibrary.dll
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\obj\Debug\net5.0\ExcelStreamerLibrary.pdb
+C:\Users\CyberFamera\source\repos\usemagnetiq\MagnetiqSolution\ExcelReaderWriterLibrary\ExcelStreamerLibrary\obj\Debug\net5.0\ref\ExcelStreamerLibrary.dll

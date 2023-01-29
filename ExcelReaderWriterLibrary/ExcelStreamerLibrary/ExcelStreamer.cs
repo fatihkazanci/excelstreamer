@@ -5,6 +5,7 @@ using ExcelStreamerLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -12,8 +13,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 /*
-*	ExcelStreamer v1.0
-*	Updated On: 09/04/2022 (dd/MM/yyyy)
+*	ExcelStreamer v1.1
+*	Updated On: 29/01/2023 (dd/MM/yyyy)
 *	By Fatih KAZANCI
 *   Licenced By GNU General Public License v3.0
 *   https://github.com/fatihkazanci/excelstreamer/blob/main/LICENSE
@@ -25,11 +26,20 @@ namespace ExcelStreamerLibrary
     {
         private XLWorkbook _xLWorkbook;
         private string _filePath;
+        private string _defaultWorksheetName;
 
-        public ExcelStreamer(string excelFilePath)
+        public ExcelStreamer(string defaultExistExcelFilePath, string defaultWorkSheet)
         {
-            _xLWorkbook = new XLWorkbook(excelFilePath);
-            _filePath = excelFilePath;
+            _xLWorkbook = new XLWorkbook(defaultExistExcelFilePath);
+            SetDefaultFilePath(defaultExistExcelFilePath);
+            SetDefaultWorkSheet(defaultWorkSheet);
+        }
+
+        public ExcelStreamer(string defaultWillCreateExcelFilePath, params string[] newWorksheetNames)
+        {
+            CreateExcelFile(defaultWillCreateExcelFilePath, newWorksheetNames);
+            SetDefaultFilePath(defaultWillCreateExcelFilePath);
+            SetDefaultWorkSheet(newWorksheetNames[0]);
         }
 
         public ExcelStreamer()
@@ -37,9 +47,29 @@ namespace ExcelStreamerLibrary
 
         }
 
-        public void SetFilePath(string filePath)
+        public void CreateExcelFile(string filePath, params string[] sheets)
         {
+            _xLWorkbook = new XLWorkbook();
+            _filePath = filePath;
+            _defaultWorksheetName = sheets[0];
+            foreach (string item in sheets)
+            {
+                _xLWorkbook.Worksheets.Add(item);
+            }
+            _xLWorkbook.SaveAs(filePath);
+        }
+        public void CreateExcelFile(params string[] sheets)
+        {
+            CreateExcelFile(_filePath, sheets);
+        }
+        public void SetDefaultFilePath(string filePath)
+        {
+            _xLWorkbook = new XLWorkbook(filePath);
             this._filePath = filePath;
+        }
+        public void SetDefaultWorkSheet(string workSheetName)
+        {
+            _defaultWorksheetName = workSheetName;
         }
         public List<T> WorkSheet<T>(string worksheetName, int startRow, int endRow, params string[] columnLetterNames) where T : ExcelStreamerWorkSheetObject
         {
@@ -48,6 +78,10 @@ namespace ExcelStreamerLibrary
         public List<T> WorkSheet<T>(string worksheetName) where T : ExcelStreamerWorkSheetObject
         {
             return (List<T>)WorkSheet(typeof(List<T>), worksheetName);
+        }
+        public List<T> WorkSheet<T>() where T : ExcelStreamerWorkSheetObject
+        {
+            return (List<T>)WorkSheet(typeof(List<T>), _defaultWorksheetName);
         }
         public List<T> WorkSheet<T>(string worksheetName, params string[] columnLetterNames) where T : ExcelStreamerWorkSheetObject
         {
@@ -345,6 +379,10 @@ namespace ExcelStreamerLibrary
             }
             return newObject;
         }
+        public T Get<T>(int row, params string[] columnLetterNames) where T : ExcelStreamerWorkSheetObject
+        {
+            return Get<T>(_defaultWorksheetName, row, columnLetterNames);
+        }
         public T Get<ExcelStreamerSheet, T>(string worksheetName, string columnLetterName, int row) where ExcelStreamerSheet : ExcelStreamerWorkSheetObject
         {
             row = row == 0 ? 1 : row;
@@ -378,12 +416,20 @@ namespace ExcelStreamerLibrary
             object newObject = xLWorksheet.Cell($"{letterNameUpper}{row}").Value;
             return (T)Convert.ChangeType(newObject, typeof(T));
         }
+        public T Get<ExcelStreamerSheet, T>(string columnLetterName, int row) where ExcelStreamerSheet : ExcelStreamerWorkSheetObject
+        {
+            return Get<ExcelStreamerSheet, T>(_defaultWorksheetName, columnLetterName, row);
+        }
         public T Get<T>(string worksheetName, string columnLetterName, int row)
         {
             row = row == 0 ? 1 : row;
             IXLWorksheet xLWorksheet = _xLWorkbook.Worksheet(worksheetName);
             object newObject = xLWorksheet.Cell($"{columnLetterName.ToUpper()}{row}").Value;
             return (T)Convert.ChangeType(newObject, typeof(T));
+        }
+        public T Get<T>(string columnLetterName, int row)
+        {
+            return Get<T>(_defaultWorksheetName, columnLetterName, row);
         }
         public ExcelStreamerResponse Update(ExcelStreamerWorkSheetObject updateObject)
         {
@@ -420,13 +466,50 @@ namespace ExcelStreamerLibrary
                 IXLWorksheet xLWorksheet = _xLWorkbook.Worksheet(worksheetName);
                 xLWorksheet.Cell($"{columnLetterName}{row}").Value = newValue;
                 excelStreamerResponse.Result = newValue;
-                _xLWorkbook.SaveAs(_filePath);
             }
             catch (Exception ex)
             {
                 excelStreamerResponse.Error(ex);
             }
             return excelStreamerResponse;
+        }
+        public ExcelStreamerResponse Update<T>(object newValue, string worksheetName, string propertyName, int row) where T : ExcelStreamerWorkSheetObject
+        {
+            ExcelStreamerResponse excelStreamerResponse = new();
+            try
+            {
+                IXLWorksheet xLWorksheet = _xLWorkbook.Worksheet(worksheetName);
+                PropertyInfo[] properties = typeof(T).GetTypeInfo().GetProperties();
+                string letterName = properties.FirstOrDefault(i => i.Name == propertyName)?.GetCustomAttribute<ExcelStreamerColumnLetter>()?.ColumnLetterName;
+
+                if (!string.IsNullOrEmpty(letterName))
+                {
+                    letterName = letterName.ToUpper(new CultureInfo("en-US", false));
+                    xLWorksheet.Cell($"{letterName}{row}").Value = newValue;
+                    excelStreamerResponse.Result = newValue;
+                }
+                else
+                {
+                    excelStreamerResponse.IsSuccess = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                excelStreamerResponse.Error(ex);
+            }
+            return excelStreamerResponse;
+        }
+        public ExcelStreamerResponse Update(object newValue, string columnLetterName, int row)
+        {
+            return Update(newValue, _defaultWorksheetName, columnLetterName, row);
+        }
+        public ExcelStreamerResponse Update<T>(object newValue, string propertyName, int row) where T : ExcelStreamerWorkSheetObject
+        {
+            return Update<T>(newValue, _defaultWorksheetName, propertyName, row);
+        }
+        public void SaveChanges()
+        {
+            _xLWorkbook.SaveAs(_filePath);
         }
         public ExcelStreamerWorkSheetCountResponse Count(string worksheetName)
         {
@@ -462,7 +545,6 @@ namespace ExcelStreamerLibrary
             {
                 IXLWorksheet xLWorksheet = _xLWorkbook.Worksheet(currentSheetName);
                 xLWorksheet.Name = newSheetName;
-                _xLWorkbook.SaveAs(_filePath);
             }
             catch (Exception ex)
             {

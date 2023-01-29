@@ -9,6 +9,13 @@ namespace ExcelReaderWriterLibrary
     {
         static void Main(string[] args)
         {
+            ExampleReadExcel();
+            //ExampleCreateExcel();
+            Console.ReadLine();
+        }
+
+        private static void ExampleReadExcel()
+        {
             string excelPath = $"{AppDomain.CurrentDomain.BaseDirectory}ExampleExcel.xlsx";
             if (!string.IsNullOrEmpty(excelPath))
             {
@@ -16,7 +23,7 @@ namespace ExcelReaderWriterLibrary
                 {
                     List<ExampleExcelWorkSheetModel> exampleListNoLimit = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1");
 
-                    List<ExampleExcelWorkSheetModel> exampleListNoLimitOnlyColumns = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1","a");
+                    List<ExampleExcelWorkSheetModel> exampleListNoLimitOnlyColumns = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1", "a");
 
                     List<ExampleExcelWorkSheetModel> exampleListNoLimitOnlyColumns2 = excelStreamer.WorkSheet<ExampleExcelWorkSheetModel>("Page1", nameof(ExampleExcelWorkSheetModel.Name));
 
@@ -60,13 +67,28 @@ namespace ExcelReaderWriterLibrary
                     //excelStreamer.UpdateWorkSheetName("Page1", "ExampleSheetName");
 
                     //excelStreamer.Update("Kazım", "Page1", "a", 1);
+                    //excelStreamer.Update<ExampleExcelWorkSheetModel>("Kazım", nameof(ExampleExcelWorkSheetModel.Name), 1);
+                    //excelStreamer.SaveChanges();
                 }
             }
             else
             {
                 Console.WriteLine("Excel Dosyası okunamadı");
             }
-            Console.ReadLine();
+        }
+        public static void ExampleCreateExcel()
+        {
+            using (ExcelStreamer excelStreamer = new())
+            {
+                string excelPath = $"{AppDomain.CurrentDomain.BaseDirectory}CreatedExampleExcel.xlsx";
+                excelStreamer.CreateExcelFile(excelPath, "Page1");
+                excelStreamer.Update("Name", "a", 1);
+                excelStreamer.Update("Surname", "b", 1);
+                excelStreamer.Update<ExampleExcelWorkSheetModel>("Fatih", nameof(ExampleExcelWorkSheetModel.Name), 2);
+                excelStreamer.Update<ExampleExcelWorkSheetModel>("Kazancı", nameof(ExampleExcelWorkSheetModel.Surname), 2);
+                excelStreamer.SaveChanges();
+
+            }
         }
 
     }
