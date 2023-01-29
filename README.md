@@ -23,7 +23,7 @@ Or Manual Example 1
 ```csharp
 using (ExcelStreamer excelStreamer = new())
  {
-    string excelPath = $"{AppDomain.CurrentDomain.BaseDirectory}CreatedExampleExcel.xlsx";
+    string excelPath = $"<Your Microsoft Excel File Path>";
     excelStreamer.CreateExcelFile(excelPath, "Page1");
  }
 ```
@@ -243,6 +243,12 @@ public class ExampleExcelSheetModel: ExcelStreamerSheetObject
     }
  }
  ```
+ 
+ **SaveChanges**: Method used to save changes made.
+```csharp
+   excelStreamer.Update("Kazım", "Page1", "a", 1);
+   excelStreamer.SaveChanges();
+```
  
 **Count:** Brings the number of lines and columns of the table in the specified Workspace. 
  
