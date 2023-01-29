@@ -78,7 +78,7 @@ public class ExampleExcelSheetModel: ExcelStreamerWorkSheetObject
 ```csharp
    excelStreamer.SetFilePath("<Your Microsoft Excel File Path>");
 ```
-**CreateExcelFile:** Create New Excel File.
+**CreateExcelFile:** Create New Excel File. When you create new Excel file you don't need to use **SetFilePath** again.
 ```csharp
 public static void ExampleCreateExcel()
         {
