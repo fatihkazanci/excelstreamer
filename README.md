@@ -47,7 +47,7 @@ using (ExcelStreamer excelStreamer = new())
  }
 ```
 
-Or you can inject dependency if you are going to use it in ASP.Net Core projects. 
+Or you can Dependency Injection if you are going to use it in ASP.Net Core projects. 
 
 ```csharp
 public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
